@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Video Sender</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #sendButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #0088cc;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #sendButton:hover {
+            background-color: #0077b5;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="sendButton">Send Video</button>
+
+    <script>
+        document.getElementById('sendButton').addEventListener('click', function() {
+            // Your bot token
+            const botToken = '5639019747:AAEkMFUZV_cD9u1B5Pm4jn4B8oJRXbs_AN8';
+            
+            // The chat ID to send the video to
+            const chatId = '1796927301';
+            
+            // The file_id of the video
+            const fileId = 'AgACAgQAAxkDAAIN82bUQYe_6uV5a2DgQV6tSOqVXGpdAAKxtDEbc0CtUlQZij_dIPW8AQADAgADeAADNQQ';
+
+            // Telegram API URL to send a video
+            const url = `https://api.telegram.org/bot${botToken}/sendVideo`;
+
+            // Data to send
+            const data = {
+                chat_id: chatId,
+                video: fileId
+            };
+
+            // Sending the POST request to Telegram API
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    alert('Video sent successfully!');
+                } else {
+                    alert('Failed to send video: ' + data.description);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error sending video: ' + error.message);
+            });
+        });
+    </script>
+
+</body>
+</html>
